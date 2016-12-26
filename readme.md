@@ -1,5 +1,3 @@
-
-
 ## 队伍简介
 
 队伍名 “诗人都藏在水底”，三位队员分别是来自北大的[wepon](https://github.com/wepe)和[charles](https://github.com/ChaosPKU)，来自中科大的[云泛天音](https://github.com/jingchenUSTC)
@@ -126,3 +124,6 @@
 - Blending模型
 
 	我们尝试了两层的blending模型，首先将训练集分为两部分（D1和D2），一部分用于第一层（level 1）的训练，另一部分用于第二层（level 2）的训练。level1 在D1上训练了4个XGBoost，4个GBDT，4个RandomForest，将这些模型的预测结果作为level2的feature，在D2上训练第二层模型。Blending模型的结果相比单模型有细微的提升，但这点提升相对于模型复杂度带来的计算代价显得微不足道。
+	
+
+![flag.png](https://github.com/wepe/O2O-Coupon-Usage-Forecast/blob/master/flag.png)
