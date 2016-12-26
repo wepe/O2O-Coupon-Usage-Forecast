@@ -1,0 +1,18 @@
+season 1
+存放了第一赛季所用的代码，主要文件说明如下：
+data_split.py  		划分数据集
+feature_extract.py  提取特征
+gen_data.py			生成训练数据
+xgb.py				训练xgb模型
+lightgbm.py			训练lightgbm模型
+dl.py				训练dnn模型
+
+season 2
+存放了第二赛季所用的代码，主要文件说明如下：
+readme.pdf			一些说明
+feature_extract/*  	提取特征的各个代码文件
+gen_data.sql		生成训练数据
+fillna.sql			填补特征缺失数据
+xgb/*				训练xgb模型
+gbdt/*				根据算法平台生成的gbdt模型生成提交文件
+rf/*				根据算法平台生成的rf模型生成提交文件			

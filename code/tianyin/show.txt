@@ -1,0 +1,21 @@
+select count(distinct user_id) from train_offline_stage2;
+select count(distinct merchant_id) from train_offline_stage2;
+select * from train_offline_stage2;
+desc prediction_stage2;
+
+show p;
+select * from ty_lr_predict_offline;
+select * from train_offline_stage2 where date_received != "null" order by date_received asc limit 100;
+
+select * from train_offline_stage2 where date_pay != "null" order by date_pay asc limit 100;
+
+select * from ty_feature_data_input;
+
+select * from ty_features;
+
+select * from ty_ucf_feature;
+
+select * from ty_xgb_predict_offline;
+
+select ucf_date_received from ty_test_offline order by ucf_date_received asc limit 100;
+

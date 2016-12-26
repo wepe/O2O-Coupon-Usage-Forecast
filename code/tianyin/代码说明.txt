@@ -1,0 +1,5 @@
+说明：
+java src文件夹为数加MapReduce特征提取代码
+features文件夹为数加sql特征表生成代码
+models文件夹为所使用到的算法模型的PAI命令
+其余的sql为数据预处理和融合

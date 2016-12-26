@@ -1,0 +1,14 @@
+create table eval_tmp
+(
+coupon_id string,
+auc double
+);
+drop table if exists ty_eval_input_wepon;
+create table ty_eval_input_wepon as 
+select user_id,coupon_id,date_received,label,case when prediction_result=0 then 1.0-prediction_score else prediction_score end as prediction_score from wepon_xgb_d2_pred where date_received >= "20160601";
+
+select a.*,b.label as label_ from
+ty_test_offline a
+join
+ty_eval_input_wepon b
+on(a.ucf_user_id = b.user_id and a.ucf_coupon_id = b.coupon_id and a.ucf_date_received = b.date_received);

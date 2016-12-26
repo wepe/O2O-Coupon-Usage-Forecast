@@ -1,0 +1,13 @@
+drop table if exists ty_data_all;
+create table ty_data_all as 
+select * from
+(
+select * from train_offline_stage2 
+union all
+select *,"-1" as date_pay from prediction_stage2
+)a;
+
+drop table if exists ty_feature_data_input;
+create table ty_feature_data_input as
+select *, date_diff_udf(date_received, date_pay, "20160101") as day_index
+from ty_data_all;

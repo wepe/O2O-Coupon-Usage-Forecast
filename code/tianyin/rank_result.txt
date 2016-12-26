@@ -1,0 +1,83 @@
+drop table if exists result_785_rank;
+create table result_785_rank as
+select distinct
+a.user_id as user_id,
+a.coupon_id as coupon_id,
+a.date_received as date_received,
+1/a.ranks
+as probability
+from
+(
+select *,rank() over(partition by coupon_id order by probability desc) as ranks
+from result_785
+) a
+;
+
+drop table if exists ty_gbdt_7846_rank;
+create table ty_gbdt_7846_rank as
+select distinct
+a.user_id as user_id,
+a.coupon_id as coupon_id,
+a.date_received as date_received,
+1/a.ranks
+as probability
+from
+(
+select *,rank() over(partition by coupon_id order by probability desc) as ranks
+from ty_gbdt_7846
+) a
+;
+
+drop table if exists wepon_xgb_7820_rank;
+create table wepon_xgb_7820_rank as
+select distinct
+a.user_id as user_id,
+a.coupon_id as coupon_id,
+a.date_received as date_received,
+1/a.ranks
+as probability
+from
+(
+select *,rank() over(partition by coupon_id order by probability desc) as ranks
+from wepon_xgb_7820
+) a
+;
+
+
+drop table if exists result_795_rank;
+create table result_795_rank as
+select distinct
+a.user_id as user_id,
+a.coupon_id as coupon_id,
+a.date_received as date_received,
+1/a.ranks
+as probability
+from
+(
+select *,rank() over(partition by coupon_id order by probability desc) as ranks
+from ty_result_tmp
+) a
+;
+
+drop table if exists results_rank;
+create table results_rank as
+select distinct
+a.user_id as user_id,
+a.coupon_id as coupon_id,
+a.date_received as date_received,
+a.probability as result_785_rank_p,
+b.probability as ty_gbdt_7846_rank_p,
+c.probability as wepon_xgb_7820_rank_p,
+d.probability as result_795_rank_p
+from
+result_785_rank a
+join
+ty_gbdt_7846_rank b
+on(a.user_id=b.user_id and a.coupon_id=b.coupon_id and a.date_received=b.date_received)
+join
+wepon_xgb_7820_rank c
+on(a.user_id=c.user_id and a.coupon_id=c.coupon_id and a.date_received=c.date_received)
+join
+result_795_rank d
+on(a.user_id=d.user_id and a.coupon_id=d.coupon_id and a.date_received=d.date_received)
+;

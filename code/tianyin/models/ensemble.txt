@@ -1,0 +1,37 @@
+drop table if exists ensemble_offline;
+create table ensemble_offline as
+select a.coupon_id, a.label,
+--cast(1/a.ranks+1/b.ranks as double)
+a.prediction_score*exp(-1) +b.prediction_score*exp(-2)+c.prediction_score*exp(-3)
+as prediction_score
+from
+(
+select * from 
+(
+select *,rank() over(partition by user_id,coupon_id,date_received order by label desc) as label_ranks
+from ty_predict_2
+) aa where aa.label_ranks = 1
+)a
+join
+(
+select * from 
+(
+select *,rank() over(partition by user_id,coupon_id,date_received order by label desc) as label_ranks
+from ty_predict_3
+) aa where aa.label_ranks = 1
+) b
+on(a.user_id = b.user_id and a.coupon_id = b.coupon_id and a.date_received=b.date_received)
+join
+(
+select * from
+(
+select *,rank() over(partition by user_id,coupon_id,date_received order by label desc) as label_ranks
+from ty_predict_4
+) aa where aa.label_ranks = 1
+) c
+on(a.user_id = c.user_id and a.coupon_id = c.coupon_id and a.date_received=c.date_received);
+
+drop table if exists ty_eval_input;
+create table ty_eval_input as
+select *
+from ensemble_offline;

@@ -1,0 +1,2 @@
+select avg(auc) from eval_tmp;
+

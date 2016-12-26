@@ -1,0 +1,3 @@
+level1用wepon_d1_fillna训练，预测 wepon_d2_fillna和 wepon_d3_fillna（测试集），预测结果作为level2的feature。
+level2用wepon_d2_fillna训练，预测wepon_d3_fillna。
+

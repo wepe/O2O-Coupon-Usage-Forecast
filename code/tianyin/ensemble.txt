@@ -1,0 +1,33 @@
+drop table if exists o2o_result;
+create table o2o_result as
+select distinct
+a.user_id as user_id,
+a.coupon_id as coupon_id,
+a.date_received as date_received,
+0.38*1/a.ranks+0.32*1/b.ranks+0.3*1/c.ranks
+as probability
+from
+(
+select *,rank() over(partition by coupon_id order by probability desc) as ranks
+from result_785
+) a
+join
+(
+select *,rank() over(partition by coupon_id order by probability desc) as ranks
+from ty_gbdt_7846
+) b
+on(a.user_id=b.user_id and a.coupon_id=b.coupon_id and a.date_received=b.date_received)
+join
+(
+select *,rank() over(partition by coupon_id order by probability desc) as ranks
+from wepon_xgb_7820
+) c
+on(a.user_id=c.user_id and a.coupon_id=c.coupon_id and a.date_received=c.date_received)
+;
+
+
+select count(*) from o2o_result;
+
+select * from o2o_result;
+
+desc o2o_result;
