@@ -55,7 +55,7 @@ model = xgb.train(params,dataset12,num_boost_round=3500,evals=watchlist)
 
 #predict test set
 dataset3_preds['label'] = model.predict(dataset3)
-dataset3_preds.label = MinMaxScaler().fit_transform(dataset3_preds.label)
+dataset3_preds.label = MinMaxScaler().fit_transform(dataset3_preds.label.reshape(-1, 1))
 dataset3_preds.sort_values(by=['coupon_id','label'],inplace=True)
 dataset3_preds.to_csv("xgb_preds.csv",index=None,header=None)
 print dataset3_preds.describe()
